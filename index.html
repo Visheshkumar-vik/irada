@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Irada - Turning Intention Into Action</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black: #0a0a0a;
+  --white: #f7f5f2;
+  --mid: #e8e4de;
+  --accent: #c8a96e;
+  --gray: #6b6560;
+  --light-gray: #d4cfc9;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--white);
+  color: var(--black);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.4rem 4rem;
+  background: rgba(247,245,242,0.96);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--light-gray);
+}
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--black);
+  text-decoration: none;
+}
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a {
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gray);
+  text-decoration: none;
+  transition: color 0.25s;
+}
+.nav-links a:hover { color: var(--black); }
+
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-top: 80px;
+}
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 6rem 4rem;
+  border-right: 1px solid var(--light-gray);
+}
+.eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.8rem;
+}
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3rem, 5vw, 5rem);
+  font-weight: 300;
+  line-height: 1.08;
+  margin-bottom: 2rem;
+}
+.hero-title em { font-style: italic; color: var(--accent); }
+.hero-sub {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--gray);
+  max-width: 440px;
+  margin-bottom: 3rem;
+}
+.btn {
+  display: inline-block;
+  padding: 0.9rem 2.4rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  cursor: pointer;
+  border: none;
+  line-height: 1;
+}
+.btn-dark { background: var(--black); color: var(--white); }
+.btn-dark:hover { background: var(--accent); color: var(--black); }
+.btn-outline {
+  background: transparent;
+  color: var(--black);
+  border: 1px solid var(--black);
+  margin-left: 1rem;
+}
+.btn-outline:hover { background: var(--black); color: var(--white); }
+
+.hero-right {
+  background: var(--black);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 4rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero-watermark {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 7rem;
+  color: rgba(255,255,255,0.04);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: 0.1em;
+}
+.hero-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  font-style: italic;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 1;
+}
+.stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  position: relative;
+  z-index: 1;
+}
+.stat {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 2rem 1.5rem;
+}
+.stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.8rem;
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+.stat-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+}
+
+.sec-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.2rem;
+}
+.sec-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 3.5vw, 3.2rem);
+  font-weight: 300;
+  line-height: 1.15;
+  margin-bottom: 1.5rem;
+}
+.sec-title em { font-style: italic; }
+.sec-body {
+  font-size: 1rem;
+  line-height: 1.85;
+  color: var(--gray);
+  max-width: 600px;
+}
+
+.about-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid var(--light-gray);
+}
+.about-text {
+  padding: 7rem 4rem;
+  border-right: 1px solid var(--light-gray);
+}
+.about-values {
+  padding: 7rem 4rem;
+  background: var(--mid);
+}
+.value-item {
+  padding: 1.8rem 0;
+  border-bottom: 1px solid var(--light-gray);
+}
+.value-item:last-child { border-bottom: none; }
+.value-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.85rem;
+  color: var(--accent);
+  margin-bottom: 0.4rem;
+}
+.value-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+.value-desc { font-size: 0.88rem; color: var(--gray); line-height: 1.65; }
+
+.mission-wrap {
+  background: var(--black);
+  padding: 7rem 4rem;
+  border-top: 1px solid #1a1a1a;
+}
+.mission-wrap .sec-label { color: var(--accent); }
+.mission-wrap .sec-title { color: var(--white); }
+.mission-wrap .sec-body { color: rgba(255,255,255,0.5); max-width: 700px; }
+.pillars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-top: 4rem;
+}
+.pillar {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 2.5rem 2rem;
+  transition: background 0.3s;
+}
+.pillar:hover { background: rgba(255,255,255,0.08); }
+.pillar-icon { font-size: 1.8rem; margin-bottom: 1.2rem; }
+.pillar-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 0.8rem;
+}
+.pillar-desc { font-size: 0.88rem; color: rgba(255,255,255,0.45); line-height: 1.7; }
+
+.team-wrap {
+  padding: 7rem 4rem;
+  border-top: 1px solid var(--light-gray);
+}
+.team-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  margin-top: 4rem;
+  max-width: 800px;
+}
+.team-card {
+  background: var(--mid);
+  padding: 3rem 2.5rem;
+  border: 1px solid var(--light-gray);
+  transition: background 0.35s;
+}
+.team-card:hover { background: var(--black); }
+.team-initial {
+  width: 52px; height: 52px;
+  border: 1px solid var(--light-gray);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  transition: border-color 0.35s, color 0.35s;
+}
+.team-card:hover .team-initial { border-color: rgba(255,255,255,0.2); color: var(--white); }
+.team-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  transition: color 0.35s;
+}
+.team-card:hover .team-name { color: var(--white); }
+.team-role {
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+.team-bio {
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: var(--gray);
+  margin-bottom: 1.2rem;
+  transition: color 0.35s;
+}
+.team-card:hover .team-bio { color: rgba(255,255,255,0.5); }
+.team-li {
+  display: inline-block;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 2px;
+  transition: opacity 0.2s;
+}
+.team-li:hover { opacity: 0.6; }
+
+.involved-wrap {
+  padding: 7rem 4rem;
+  background: var(--mid);
+  border-top: 1px solid var(--light-gray);
+}
+.involved-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-top: 4rem;
+}
+.involved-card {
+  background: var(--white);
+  padding: 2.5rem 2rem;
+  border: 1px solid var(--light-gray);
+}
+.involved-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem;
+  font-weight: 300;
+  color: var(--light-gray);
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+.involved-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.7rem;
+}
+.involved-desc { font-size: 0.88rem; color: var(--gray); line-height: 1.7; }
+.involved-cta {
+  margin-top: 4rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.contact-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid var(--light-gray);
+}
+.contact-left { padding: 7rem 4rem; border-right: 1px solid var(--light-gray); }
+.contact-right {
+  padding: 7rem 4rem;
+  background: var(--black);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.contact-right .sec-label { color: var(--accent); }
+.contact-right .sec-title { color: var(--white); }
+.contact-right .sec-body { color: rgba(255,255,255,0.45); }
+.contact-link {
+  display: block;
+  margin-top: 1.5rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem;
+  color: var(--accent);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.contact-link:hover { opacity: 0.7; }
+.form-group { margin-bottom: 1.5rem; }
+.form-group label {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 0.5rem;
+}
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--light-gray);
+  padding: 0.7rem 0;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  color: var(--black);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.form-group input:focus,
+.form-group textarea:focus { border-color: var(--black); }
+.form-group textarea { resize: none; height: 100px; }
+
+footer {
+  padding: 2rem 4rem;
+  border-top: 1px solid var(--light-gray);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--white);
+}
+.footer-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.footer-copy { font-size: 0.75rem; color: var(--gray); }
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 900px) {
+  nav { padding: 1.2rem 1.5rem; }
+  .nav-links { display: none; }
+  .hero { grid-template-columns: 1fr; }
+  .hero-left { padding: 4rem 1.5rem; }
+  .hero-right { min-height: 50vh; padding: 2rem 1.5rem; }
+  .about-wrap { grid-template-columns: 1fr; }
+  .about-text { padding: 4rem 1.5rem; border-right: none; border-bottom: 1px solid var(--light-gray); }
+  .about-values { padding: 4rem 1.5rem; }
+  .mission-wrap { padding: 4rem 1.5rem; }
+  .pillars { grid-template-columns: 1fr; }
+  .team-wrap { padding: 4rem 1.5rem; }
+  .team-grid { grid-template-columns: 1fr; max-width: 100%; }
+  .involved-wrap { padding: 4rem 1.5rem; }
+  .involved-grid { grid-template-columns: 1fr; }
+  .contact-wrap { grid-template-columns: 1fr; }
+  .contact-left { padding: 4rem 1.5rem; border-right: none; border-bottom: 1px solid var(--light-gray); }
+  .contact-right { padding: 4rem 1.5rem; }
+  footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#home" class="nav-logo">Irada</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#mission">Mission</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#involved">Get Involved</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div id="home" class="hero">
+  <div class="hero-left">
+    <p class="eyebrow fade-up">Women Empowerment Initiative</p>
+    <h1 class="hero-title fade-up">Turning<br><em>Intention</em><br>Into Action</h1>
+    <p class="hero-sub fade-up">Irada is a social impact initiative bridging the gap between gender-focused policy research and real-world implementation — empowering women through mentorship, skill development, and access to opportunities.</p>
+    <div class="fade-up">
+      <a href="#involved" class="btn btn-dark">Get Involved</a>
+      <a href="#mission" class="btn btn-outline">Our Mission</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-watermark">Sankalpa</div>
+    <p class="hero-tagline">"Sankalpa — The sacred resolve to act."</p>
+    <div class="stat-grid">
+      <div class="stat">
+        <div class="stat-num">2</div>
+        <div class="stat-label">Founders</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">1</div>
+        <div class="stat-label">Country Partnership</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">&#8734;</div>
+        <div class="stat-label">Women to Reach</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">Now</div>
+        <div class="stat-label">Building</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="about" class="about-wrap">
+  <div class="about-text">
+    <p class="sec-label fade-up">Who We Are</p>
+    <h2 class="sec-title fade-up">A bridge between<br><em>policy &amp; people</em></h2>
+    <p class="sec-body fade-up">Irada was born from a simple but powerful observation — that the most meaningful gender-equality research often stays within policy circles, never reaching the women who need it most.</p>
+    <br>
+    <p class="sec-body fade-up">Founded by an engineer and a policy researcher with direct ties to India's Prime Minister's Office, Irada translates institutional knowledge into practical tools that help women move forward — with clarity, confidence, and community.</p>
+    <br>
+    <p class="sec-body fade-up">The word <em>Irada</em> draws inspiration from the Sanskrit <em>Sankalpa</em> — the sacred vow to act with purpose. We believe intention, when matched with the right support, becomes unstoppable action.</p>
+  </div>
+  <div class="about-values">
+    <p class="sec-label fade-up">Our Values</p>
+    <div class="value-item fade-up">
+      <div class="value-num">01</div>
+      <div class="value-name">Translate</div>
+      <div class="value-desc">We turn complex policy insights into accessible, practical guidance for everyday women.</div>
+    </div>
+    <div class="value-item fade-up">
+      <div class="value-num">02</div>
+      <div class="value-name">Connect</div>
+      <div class="value-desc">We build meaningful mentor-mentee relationships that open doors and build confidence.</div>
+    </div>
+    <div class="value-item fade-up">
+      <div class="value-num">03</div>
+      <div class="value-name">Empower</div>
+      <div class="value-desc">We equip women with the skills, networks, and mindset to own their futures.</div>
+    </div>
+    <div class="value-item fade-up">
+      <div class="value-num">04</div>
+      <div class="value-name">Act</div>
+      <div class="value-desc">Intention means nothing without action. We create the conditions for women to move forward.</div>
+    </div>
+  </div>
+</div>
+
+<div id="mission" class="mission-wrap">
+  <p class="sec-label fade-up">Our Mission</p>
+  <h2 class="sec-title fade-up">Closing the gap between<br><em>what's known</em> and <em>what's done</em></h2>
+  <p class="sec-body fade-up">Gender equality research has never been more advanced. Yet millions of women remain disconnected from its findings. Irada exists to close that gap — building a scalable framework that carries policy insights directly into the lives of women who need them.</p>
+  <div class="pillars">
+    <div class="pillar fade-up">
+      <div class="pillar-icon">&#127891;</div>
+      <div class="pillar-title">Mentorship</div>
+      <div class="pillar-desc">Structured, meaningful connections between women with lived experience and those just starting their journey.</div>
+    </div>
+    <div class="pillar fade-up">
+      <div class="pillar-icon">&#128736;</div>
+      <div class="pillar-title">Skill Development</div>
+      <div class="pillar-desc">Practical workshops, resources, and programs designed around what women actually need to thrive.</div>
+    </div>
+    <div class="pillar fade-up">
+      <div class="pillar-icon">&#127759;</div>
+      <div class="pillar-title">Policy to Practice</div>
+      <div class="pillar-desc">Backed by research from India's NITI Aayog, we ground everything we do in evidence-based insights.</div>
+    </div>
+  </div>
+</div>
+
+<div id="team" class="team-wrap">
+  <p class="sec-label fade-up">The People</p>
+  <h2 class="sec-title fade-up">Meet the <em>founders</em></h2>
+  <p class="sec-body fade-up">Two people, one shared belief — that every woman deserves the support to turn her intentions into reality.</p>
+  <div class="team-grid">
+    <div class="team-card fade-up">
+      <div class="team-initial">V</div>
+      <div class="team-name">Vishesh Kumar</div>
+      <div class="team-role">Co-Founder</div>
+      <div class="team-bio">Mechanical Engineering student at RMIT University, Melbourne. Brings an engineering systems mindset to social impact — building the operational and strategic infrastructure that makes Irada scalable and sustainable.</div>
+      <a href="https://www.linkedin.com/in/vikvisheshkumar" target="_blank" class="team-li">LinkedIn &#8599;</a>
+    </div>
+    <div class="team-card fade-up">
+      <div class="team-initial">I</div>
+      <div class="team-name">Ishika Chaudhary</div>
+      <div class="team-role">Co-Founder</div>
+      <div class="team-bio">Policy researcher with direct experience at NITI Aayog, the Prime Minister's Office of India. Brings deep institutional knowledge of gender policy and translates research into real-world frameworks that reach the women who need them.</div>
+      <a href="https://www.linkedin.com/in/ishika-chaudhary-2318901b0" target="_blank" class="team-li">LinkedIn &#8599;</a>
+    </div>
+  </div>
+</div>
+
+<div id="involved" class="involved-wrap">
+  <p class="sec-label fade-up">Join Us</p>
+  <h2 class="sec-title fade-up">There's a place<br>for <em>everyone</em> here</h2>
+  <p class="sec-body fade-up">Irada is currently in its founding stage and growing. Whether you want to mentor, volunteer, partner, or simply follow our journey — we would love to have you.</p>
+  <div class="involved-grid">
+    <div class="involved-card fade-up">
+      <div class="involved-num">01</div>
+      <div class="involved-title">Become a Mentor</div>
+      <div class="involved-desc">Share your experience, skills, and network with women who are building their paths. Even one conversation can change a trajectory.</div>
+    </div>
+    <div class="involved-card fade-up">
+      <div class="involved-num">02</div>
+      <div class="involved-title">Join as a Mentee</div>
+      <div class="involved-desc">Access guidance, community, and skill-building opportunities designed to help you move forward with clarity and confidence.</div>
+    </div>
+    <div class="involved-card fade-up">
+      <div class="involved-num">03</div>
+      <div class="involved-title">Partner with Us</div>
+      <div class="involved-desc">If your organisation shares our values, let's build something together. We are open to partnerships, collaborations, and sponsorships.</div>
+    </div>
+  </div>
+  <div class="involved-cta fade-up">
+    <a href="#contact" class="btn btn-dark">Get in Touch</a>
+    <span style="font-size:0.85rem; color:var(--gray);">We respond to every message.</span>
+  </div>
+</div>
+
+<div id="contact" class="contact-wrap">
+  <div class="contact-left">
+    <p class="sec-label fade-up">Say Hello</p>
+    <h2 class="sec-title fade-up">Let's start a<br><em>conversation</em></h2>
+    <p class="sec-body fade-up">Whether you want to get involved, ask a question, or just learn more about what we're building — reach out. We would love to hear from you.</p>
+    <div style="margin-top:2.5rem">
+      <div class="form-group fade-up">
+        <label>Your Name</label>
+        <input type="text" placeholder="Jane Smith">
+      </div>
+      <div class="form-group fade-up">
+        <label>Email Address</label>
+        <input type="email" placeholder="jane@example.com">
+      </div>
+      <div class="form-group fade-up">
+        <label>How can we help?</label>
+        <textarea placeholder="Tell us a bit about yourself and how you would like to get involved..."></textarea>
+      </div>
+      <div class="fade-up">
+        <button class="btn btn-dark" onclick="alert('Thank you! We will be in touch soon.')">Send Message</button>
+      </div>
+    </div>
+  </div>
+  <div class="contact-right">
+    <p class="sec-label fade-up">Direct Contact</p>
+    <h2 class="sec-title fade-up">Reach us<br><em>directly</em></h2>
+    <p class="sec-body fade-up">We are a small, founding team and we personally read every message.</p>
+    <a href="mailto:visheshkumar.vik@gmail.com" class="contact-link fade-up">visheshkumar.vik@gmail.com</a>
+    <a href="https://www.linkedin.com/in/vikvisheshkumar" target="_blank" class="contact-link fade-up">LinkedIn — Vishesh Kumar</a>
+    <a href="https://www.linkedin.com/in/ishika-chaudhary-2318901b0" target="_blank" class="contact-link fade-up">LinkedIn — Ishika Chaudhary</a>
+    <p class="sec-body fade-up" style="font-size:0.85rem; margin-top:2rem;">Based in Delhi, India.<br>Working globally.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">Irada</div>
+  <div class="footer-copy">&#169; 2025 Irada. Turning Intention Into Action.</div>
+</footer>
+
+<script>
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-up').forEach(function(el) {
+    observer.observe(el);
+  });
+  var navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', function() {
+    var current = '';
+    document.querySelectorAll('[id]').forEach(function(s) {
+      if (window.scrollY >= s.offsetTop - 120) {
+        current = s.getAttribute('id');
+      }
+    });
+    navLinks.forEach(function(a) {
+      a.style.color = (a.getAttribute('href') === '#' + current) ? '#0a0a0a' : '';
+    });
+  });
+</script>
+</body>
+</html>
